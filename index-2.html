@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Van al Aeropuerto · Tablero de gestión (maqueta Power BI)</title>
+<style>
+:root{--bg:#EAEAEA;--sf:#fff;--ink:#252423;--mut:#605E5C;--ln:#D2D0CE;--hd:#252423;--tb:#F3F2F1;--br:#F2C811;--c1:#01B8AA;--c2:#374649;--c3:#8AD4EB;--c4:#F2C80F;--red:#FD625E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1F1F1F;--sf:#2B2B2B;--ink:#F3F2F1;--mut:#C8C6C4;--ln:#484644;--hd:#161616;--tb:#252423;--c1:#2FD4C5;--c2:#C8D3D6;--c3:#5FA8D3;--c4:#F2C80F;--red:#FE7C79}}
+:root[data-theme="dark"]{--bg:#1F1F1F;--sf:#2B2B2B;--ink:#F3F2F1;--mut:#C8C6C4;--ln:#484644;--hd:#161616;--tb:#252423;--c1:#2FD4C5;--c2:#C8D3D6;--c3:#5FA8D3;--c4:#F2C80F;--red:#FE7C79}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 "Segoe UI","Segoe UI Web (West European)",-apple-system,system-ui,Roboto,"Helvetica Neue",sans-serif;padding-bottom:64px}
+header{background:var(--hd);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.lg{background:var(--br);color:#252423;width:32px;height:32px;border-radius:2px;display:grid;place-items:center;font-weight:700;font-size:16px}
+header h1{font-size:16px;font-weight:600;margin:0}
+header p{margin:0;font-size:12px;opacity:.7}
+.demo{margin-left:auto;font-size:12px;background:#ffffff1f;border-radius:20px;padding:3px 12px}
+.slc{display:flex;gap:8px;flex-wrap:wrap;padding:10px 20px;background:var(--tb);border-bottom:1px solid var(--ln)}
+.slc span{font-size:12px;border:1px solid var(--ln);border-radius:2px;padding:4px 10px;color:var(--mut);background:var(--sf)}.slc span::after{content:"▾";margin-left:10px;color:var(--ink)}
+.slc b{color:var(--ink);font-weight:500}
+main{padding:16px 20px;max-width:1240px;margin:0 auto}
+.pg{display:none}.pg.on{display:block}
+.pg>h2{font-size:17px;margin:0 0 2px;font-weight:600}
+.pg>.lead{margin:0 0 14px;color:var(--mut);font-size:13px;max-width:78ch}
+.g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px;margin-bottom:12px}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+@media (max-width:820px){.g>*{grid-column:1/-1}.g>.s3{grid-column:span 6}}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:2px;padding:12px 14px;min-width:0;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.card h3{font-size:12px;font-weight:600;margin:0;color:var(--ink)}
+.sub{font-size:11px;color:var(--mut);margin:1px 0 10px}
+.k{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 12px}
+.kl{order:2;font-size:12px;font-weight:600;color:var(--ink)}
+.kv{order:1;font-size:32px;font-weight:300;line-height:1.2;font-variant-numeric:tabular-nums}
+.kn{order:3;font-size:11px;color:var(--mut)}
+.lgd{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-bottom:6px}
+.lgd i{display:inline-block;width:14px;height:0;border-top:3px solid;vertical-align:middle;margin-right:5px}
+.tx{fill:var(--mut);font-size:10px;font-family:inherit}
+.hr{display:grid;grid-template-columns:104px 1fr 76px;gap:8px;align-items:center;margin:8px 0;font-size:12.5px}
+.hr b{font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.tr{background:transparent;height:16px;display:flex}
+.tr i{display:block;height:100%}
+.fr .tr{justify-content:center}
+.hm{border-collapse:separate;border-spacing:1px;width:100%;font-size:12px;font-variant-numeric:tabular-nums}
+.hm th{font-weight:500;color:var(--mut);font-size:11.5px;text-align:center;padding:2px}
+.hm th:first-child{text-align:left;width:92px}
+.hm td{text-align:center;padding:7px 2px;color:#252423}
+.cols{display:flex;gap:16px;align-items:flex-end;height:170px}
+.col{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+.col i{width:100%;max-width:70px}
+.col b{font-weight:500;font-size:12.5px}.col span{font-size:11.5px;color:var(--mut);text-align:center}
+.note{font-size:12px;color:var(--mut);margin:8px 0 0}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.flow div{flex:1 1 130px;border:1px solid var(--ln);border-radius:2px;padding:9px 11px;font-size:12px;background:var(--bg)}
+.flow div b{display:block;font-size:12.5px;font-weight:600;margin-bottom:2px}
+.flow div.ar{flex:0 0 auto;border:0;background:none;padding:0;align-self:center;color:var(--mut);font-size:18px}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--tb);border-top:1px solid var(--ln);display:flex;gap:0;padding:0 12px env(safe-area-inset-bottom,0px);overflow-x:auto;z-index:5}
+.tabs button{background:none;border:0;border-bottom:3px solid transparent;color:var(--ink);font:inherit;font-size:13px;padding:11px 16px 8px;border-radius:0;cursor:pointer;white-space:nowrap}
+.tabs button.on{background:var(--sf);border-bottom-color:var(--br);font-weight:600}
+.tabs button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+.ft{font-size:12px;color:var(--mut);margin:6px 0 0}
+.sl{position:relative}.sl>button,.clr{font:inherit;font-size:12px;border:1px solid var(--ln);border-radius:2px;background:var(--sf);color:var(--mut);padding:5px 10px;cursor:pointer}.sl b{color:var(--ink);font-weight:600}.clr{margin-left:auto;color:var(--ink)}.dd{position:absolute;top:100%;left:0;z-index:20;min-width:190px;background:var(--sf);border:1px solid var(--ln);box-shadow:0 4px 12px rgba(0,0,0,.25);padding:6px 4px;max-height:280px;overflow:auto}.dd label{display:flex;gap:8px;align-items:center;padding:5px 8px;font-size:12.5px;cursor:pointer}.dd label:hover,.cf:hover{background:var(--bg)}.cf{cursor:pointer}.dm{opacity:.4}.pg>.lead{display:none}
+@media print{.tabs{display:none}.pg{display:block!important;break-after:page}body{padding-bottom:0}}
+</style>
+</head>
+<body>
+<header><span class="lg">V</span><div><h1>Power BI · Van al Aeropuerto</h1><p>Tablero de gestión · informe para los socios</p></div><span class="demo">Datos ilustrativos</span></header>
+<div class="slc" id="sbar" aria-label="Segmentadores comunes a todas las páginas"></div>
+<main id="root"></main>
+<nav class="tabs" id="tabs" aria-label="Páginas del informe"></nav>
+<script>
+const $=s=>document.querySelector(s);
+const M=['Jul','Ago','Sep','Oct','Nov','Dic','Ene','Feb','Mar','Abr','May','Jun'];
+const R=[780,610,590,640,680,860,920,760,640,650,600,630];
+const A=[112,98,95,101,104,118,121,108,96,97,92,96];
+const sum=a=>a.reduce((x,y)=>x+y,0),avg=a=>sum(a)/a.length;
+const IR=R.map(v=>Math.round(v/avg(R)*100));
+const pear=(a,b)=>{const x=avg(a),y=avg(b);return sum(a.map((v,i)=>(v-x)*(b[i]-y)))/Math.sqrt(sum(a.map(v=>(v-x)**2))*sum(b.map(v=>(v-y)**2)))};
+const fm=v=>v.toLocaleString('es-AR');
+const pc=(v,d=0)=>v.toLocaleString('es-AR',{maximumFractionDigits:d,minimumFractionDigits:d})+' %';
+
+function line(lab,S,o={}){
+  const w=640,h=240,l=44,r=12,t=12,b=26,n=lab.length,st=(w-l-r)/(n-1);
+  const all=S.flatMap(s=>s.v).concat(o.band?o.band.lo.concat(o.band.hi):[]).filter(v=>v!=null);
+  const mn=Math.floor(Math.min(...all)*.9/10)*10,mx=Math.ceil(Math.max(...all)*1.05/10)*10;
+  const y=v=>t+(h-t-b)*(1-(v-mn)/(mx-mn)),x=i=>l+st*i;
+  let s=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${o.aria}" style="width:100%;height:auto;display:block">`;
+  (o.shade||[]).forEach(([a,c])=>{s+=`<rect x="${Math.max(l,x(a)-st/2)}" y="${t}" width="${(c-a+1)*st}" height="${h-t-b}" fill="var(--br)" opacity=".22"/>`});
+  for(let k=0;k<=4;k++){const v=mn+(mx-mn)*k/4;s+=`<line x1="${l}" x2="${w-r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--ln)"/><text class="tx" x="${l-6}" y="${y(v)+3}" text-anchor="end">${Math.round(v)}</text>`}
+  if(o.band){let p=[],q=[];o.band.hi.forEach((v,i)=>{if(v!=null){p.push(x(i)+','+y(v));q.unshift(x(i)+','+y(o.band.lo[i]))}});s+=`<polygon points="${p.concat(q).join(' ')}" fill="var(--c2)" opacity=".16"/>`}
+  S.forEach(e=>{let d='',pv=false;e.v.forEach((v,i)=>{if(v==null){pv=false;return}d+=(pv?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1);pv=true});
+    s+=`<path d="${d}" fill="none" stroke="${e.c}" stroke-width="2.4"${e.d?' stroke-dasharray="6 4"':''}/>`;
+    if(!e.d)e.v.forEach((v,i)=>{if(v!=null)s+=`<circle cx="${x(i)}" cy="${y(v)}" r="2.6" fill="${e.c}"/>`})});
+  lab.forEach((m,i)=>{s+=`<text class="tx" x="${x(i)}" y="${h-8}" text-anchor="middle">${m}</text>`});
+  return s+'</svg>';
+}
+const lgd=a=>`<div class="lgd">${a.map(([t,c,d])=>`<span><i style="border-color:${c};${d?'border-top-style:dashed':''}"></i>${t}</span>`).join('')}</div>`;
+const card=(s,t,u,b)=>`<div class="card s${s}"><h3>${t}</h3><div class="sub">${u}</div>${b}</div>`;
+const kpi=(l,v,n,c)=>`<div class="card k s3" style="--k:${c}"><div class="kl">${l}</div><div class="kv">${v}</div><div class="kn">${n}</div></div>`;
+const hb=(it,mx,f,c)=>it.map(([l,v])=>`<div class="hr"><span>${l}</span><div class="tr"><i style="width:${v/mx*100}%;background:${c}"></i></div><b>${f(v)}</b></div>`).join('');
+const heat=(rows,cols,val,cell)=>`<table class="hm"><tr><th></th>${cols.map(c=>`<th>${c}</th>`).join('')}</tr>${rows.map((r,i)=>`<tr><th>${r}</th>${cols.map((c,j)=>cell(val(i,j))).join('')}</tr>`).join('')}</table>`;
+
+/* ---- datos ilustrativos: 8.360 solicitudes simuladas ---- */
+const FR=['00–04 h','04–08 h','08–12 h','12–16 h','16–20 h','20–24 h'],DS=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+const CN=['Auto Urbano','Auto Ejecutivo','Kangoo','Van (tercerizada)'],PN=['Ezeiza','Aeroparque','Retiro / Buquebus'],SN=['Particular','Empresa','Agencia'],CHN=['WhatsApp','Formulario web','Otro'],AN=['24–48 h','2–7 días','Más de 7 días'];
+const ML=M.map((x,i)=>x+' '+(i<6?2025:2026));
+let sd=7;const rnd=()=>(sd=(sd*1664525+1013904223)>>>0)/4294967296;
+const pick=w=>{let r=rnd(),i=0;for(;i<w.length-1;i++){if(r<w[i])break;r-=w[i]}return i};
+const fw=[.25,.8,.5,.55,.75,.6],dw=[1,.7,.7,.75,.95,.8,1.02],FW=fw.map(v=>v/sum(fw)),DW=dw.map(v=>v/sum(dw));
+const TAR=[40000,62000,38000,95000],cb=[.97,.95,.88,.74],fp=[.02,.08,0,.02,.05,.09];
+const D=[];
+R.forEach((n,m)=>{for(let j=0;j<n;j++){
+  const d=pick(DW),f=pick(FW),p=pick([.52,.38,.1]),c=pick([.5,.25,.13,.12]),s=pick([.62,.2,.18]),ch=pick([.92,.05,.03]),a=pick([.25,.45,.3]);
+  const v=rnd()<.86,q=v&&rnd()<.826,k=q&&rnd()<Math.min(.97,.76*[.97,1.05,1.18][s]*[.75,1,1.18][a]),x=k&&rnd()<[.091,.06,.042][s],cov=cb[c]-fp[f],u=rnd(),o=!k?-1:u<cov*.87?1:u<cov?2:0;
+  D.push({m,d,f,p,c,s,ch,a,v,q,k,x,o,r:k&&!x,sent:!k?0:o==1?3:6,rej:!k?0:o==1?(rnd()<.55?0:1):o==2?4:6,im:k&&!x?Math.round(TAR[c]*(.9+.25*rnd())):0});
+}});
+/* ---- filtros (vacío = todos) ---- */
+const F={m:new Set,p:new Set,c:new Set,s:new Set,ch:new Set};
+const SL=[['m','Período',ML],['p','Punto de servicio',PN],['c','Categoría',CN],['s','Segmento',SN],['ch','Canal',CHN]];
+let OPEN=null,CUR=0;
+const ok=(r,ex)=>Object.keys(F).every(k=>k==ex||!F[k].size||F[k].has(r[k]));
+const X=ex=>D.filter(r=>ok(r,ex)),cnt=(a,f)=>a.filter(f).length,pct=(a,b)=>b?a/b*100:0;
+const sbar=()=>SL.map(([k,t,o])=>{const s=F[k],lab=!s.size?'Todos':s.size==1?o[[...s][0]]:s.size+' seleccionados';
+  return `<div class="sl"><button data-sl="${k}">${t}: <b>${lab}</b> ▾</button>${OPEN==k?`<div class="dd">${o.map((x,i)=>`<label><input type="checkbox" data-ck="${k}" data-v="${i}"${s.has(i)?' checked':''}> ${x}</label>`).join('')}</div>`:''}</div>`}).join('')+'<button class="clr" data-x="1">Borrar filtros</button>';
+const cfc=(k,i)=>F[k].size&&!F[k].has(i)?' dm':'';
+const hbx=(it,mx,f,col,k)=>it.map(([l,v,i])=>`<div class="hr cf${cfc(k,i)}" data-cf="${k}" data-v="${i}" title="${l}: ${f(v)}"><span>${l}</span><div class="tr"><i style="width:${mx?v/mx*100:0}%;background:${col}"></i></div><b>${f(v)}</b></div>`).join('');
+const CLK='Clic en una barra para filtrar el resto del informe';
+
+const P1=()=>{const A0=X(),mc=X('m'),cm=M.map((_,i)=>cnt(mc,r=>r.m==i)),ms=cm.map((v,i)=>F.m.size&&!F.m.has(i)?null:v),sel=ms.filter(v=>v!=null),av=avg(sel)||1,ir=ms.map(v=>v==null?null:Math.round(v/av*100)),am=A.map((v,i)=>ms[i]==null?null:v);
+  const pk=ir.reduce((b,v,i)=>v!=null&&(b<0||v>ir[b])?i:b,-1),ix=ms.map((v,i)=>v==null?-1:i).filter(i=>i>=0),co=ix.length>2?pear(ix.map(i=>ms[i]),ix.map(i=>A[i])):NaN;
+  const Xp=X('p'),pp=PN.map((n,i)=>[n,cnt(Xp,r=>r.p==i),i]),pt=sum(pp.map(a=>a[1]))||1,top=pp.slice().sort((a,b)=>b[1]-a[1])[0];
+  const H=Array.from({length:7},()=>Array(6).fill(0));A0.forEach(r=>H[r.d][r.f]++);const hm=Math.max(1,...H.flat());
+  return `<h2>1. Demanda y estacionalidad</h2><p class="lead">Cuándo y dónde se concentra la demanda.</p>
+<div class="g">${kpi('Solicitudes del período',fm(A0.length),'promedio '+fm(Math.round(av))+' por mes','var(--c1)')}${kpi('Mes pico (índice de estacionalidad)',pk<0?'–':M[pk]+' · '+ir[pk],'100 = demanda promedio','var(--c2)')}${kpi('Correlación con pasajeros ANAC',isNaN(co)?'–':co.toLocaleString('es-AR',{maximumFractionDigits:2}),'reservas propias vs. mercado','var(--c3)')}${kpi('Punto de servicio principal',top[0]+' · '+Math.round(top[1]/pt*100)+' %','sobre el total de solicitudes','var(--c4)')}</div>
+<div class="g">${card(8,'Solicitudes por mes frente al mercado','Índice de estacionalidad (100 = promedio). Sombreado: feriados y vacaciones',lgd([['Reservas Van al Aeropuerto','var(--c1)'],['Pasajeros ANAC','var(--c2)',1]])+line(M,[{v:ir,c:'var(--c1)'},{v:am,c:'var(--c2)',d:1}],{shade:[[0,0],[5,7]],aria:'Índice de estacionalidad mensual de reservas y pasajeros ANAC'}))}
+${card(4,'Solicitudes por punto de servicio',CLK,hbx(pp,Math.max(...pp.map(a=>a[1])),fm,'var(--c1)','p'))}</div>
+<div class="g">${card(12,'Solicitudes por día de la semana y franja horaria','Cantidad de solicitudes. Más oscuro = más demanda',heat(DS,FR,(i,j)=>H[i][j],v=>`<td style="background:color-mix(in srgb,var(--c1) ${Math.round(v/hm*80)}%,#E6F7F5)">${v}</td>`))}</div>`};
+
+const P2=()=>{const K=X().filter(r=>r.k),sc=cnt(K,r=>r.o==0),rj=pct(sum(K.map(r=>r.rej)),sum(K.map(r=>r.sent)));
+  const Kc=X('c').filter(r=>r.k),rows=CN.map((nm,i)=>{const a=Kc.filter(r=>r.c==i);return[nm,cnt(a,r=>r.o==1),cnt(a,r=>r.o==2),cnt(a,r=>r.o==0),i]}),mx=Math.max(1,...rows.map(a=>a[1]+a[2]+a[3]));
+  const MT=CN.map(()=>FR.map(()=>[0,0]));K.forEach(r=>{const z=MT[r.c][r.f];z[0]++;if(r.o>0)z[1]++});
+  const cr=rows.map(a=>[a[0],pct(a[3],a[1]+a[2]+a[3]),a[1]+a[2]+a[3]]).filter(a=>a[2]>0).sort((a,b)=>b[1]-a[1])[0]||['–',0];
+  return `<h2>2. Capacidad y cobertura</h2><p class="lead">Dónde la flota tercerizada resulta insuficiente.</p>
+<div class="g">${kpi('Cobertura global',pc(pct(K.length-sc,K.length),1),'asignadas ÷ reservas confirmadas','var(--c1)')}${kpi('Tasa de rechazo de conductores',pc(rj,1),'rechazos y vencimientos ÷ envíos','var(--red)')}${kpi('Reservas sin cubrir',fm(sc),pc(pct(sc,K.length),1)+' tras la segunda vuelta','var(--c4)')}${kpi('Categoría más crítica',cr[0].split(' (')[0]+' · '+pc(cr[1]),'sin cubrir sobre sus reservas','var(--c2)')}</div>
+<div class="g">${card(6,'Resultado de las reservas por categoría',CLK,lgd([['Asignada en 1.ª ronda','var(--c1)'],['Asignada en 2.ª ronda','var(--c4)'],['Sin cubrir','var(--red)']])+rows.map(a=>`<div class="hr cf${cfc('c',a[4])}" data-cf="c" data-v="${a[4]}" title="${a[0]}: ${a[1]} en 1.ª ronda, ${a[2]} en 2.ª, ${a[3]} sin cubrir"><span>${a[0]}</span><div class="tr"><i style="width:${a[1]/mx*100}%;background:var(--c1)"></i><i style="width:${a[2]/mx*100}%;background:var(--c4)"></i><i style="width:${a[3]/mx*100}%;background:var(--red)"></i></div><b>${a[1]+a[2]+a[3]}</b></div>`).join(''))}
+${card(6,'Cobertura por categoría y franja','Asignadas ÷ confirmadas. Más rojo = menor cobertura',heat(CN,FR,(i,j)=>MT[i][j],v=>{if(v[0]<4)return'<td>–</td>';const c=v[1]/v[0];return`<td title="${v[1]} de ${v[0]}" style="background:color-mix(in srgb,var(--red) ${Math.min(70,Math.round((1-c)*220))}%,#FDEDEB)">${Math.round(c*100)} %</td>`}))}</div>`};
+
+const P3=()=>{const A0=X(),r0=A0.filter(r=>r.r),k0=cnt(A0,r=>r.k),v0=cnt(A0,r=>r.v),fn=[A0.length,v0,cnt(A0,r=>r.q),k0,r0.length],inc=sum(r0.map(r=>r.im));
+  const Xs=X('s'),sg=SN.map((n,i)=>{const a=Xs.filter(r=>r.s==i);return[n,pct(cnt(a,r=>r.k),cnt(a,r=>r.v)),pct(cnt(a,r=>r.x),cnt(a,r=>r.k)),i]});
+  const an=AN.map((n,i)=>{const a=A0.filter(r=>r.a==i);return[n,pct(cnt(a,r=>r.k),cnt(a,r=>r.v))]});
+  const Xc=X('c'),cm=CN.map((n,i)=>[n,.25*sum(Xc.filter(r=>r.c==i).map(r=>r.im))/1e6,i]),mu=v=>'$ '+v.toLocaleString('es-AR',{minimumFractionDigits:1,maximumFractionDigits:1})+' M';
+  return `<h2>3. Desempeño comercial</h2><p class="lead">Conversión, cancelación y comisión.</p>
+<div class="g">${kpi('Conversión consulta a reserva',pc(pct(k0,v0),1),'confirmadas ÷ consultas válidas','var(--c1)')}${kpi('Tasa de cancelación',pc(pct(cnt(A0,r=>r.x),k0),1),'canceladas ÷ confirmadas','var(--red)')}${kpi('Ticket promedio','$ '+fm(Math.round(inc/(r0.length||1))),'facturación ÷ servicios realizados','var(--c2)')}${kpi('Comisión de la empresa',mu(inc*.25/1e6),'25 % de los servicios realizados','var(--c4)')}</div>
+<div class="g">${card(6,'Embudo de consulta a servicio','Cantidad y porcentaje sobre la etapa anterior',['Consultas recibidas','Consultas válidas','Cotizadas','Reservas confirmadas','Servicios realizados'].map((l,i)=>`<div class="hr fr"><span>${l}</span><div class="tr"><i style="width:${pct(fn[i],fn[0])}%;background:color-mix(in srgb,var(--c1) ${100-i*14}%,var(--sf))"></i></div><b>${fm(fn[i])}${i?' · '+Math.round(pct(fn[i],fn[i-1]))+' %':''}</b></div>`).join(''))}
+${card(6,'Conversión y cancelación por segmento',CLK,hbx(sg.map(a=>[a[0],a[1],a[3]]),80,v=>pc(v,0),'var(--c1)','s')+'<div class="sub" style="margin-top:14px">Cancelación sobre reservas confirmadas</div>'+hbx(sg.map(a=>[a[0],a[2],a[3]]),12,v=>pc(v,1),'var(--red)','s'))}</div>
+<div class="g">${card(6,'Conversión según anticipación','Evalúa la regla de no tomar reservas con menos de 24 h',`<div class="cols">${an.map(([l,v])=>`<div class="col"><b>${Math.round(v)} %</b><i style="height:${v*1.7}px;background:var(--c2)"></i><span>${l}</span></div>`).join('')}</div>`)}
+${card(6,'Comisión por categoría','Millones de pesos (25 % de los servicios realizados)',hbx(cm,Math.max(.1,...cm.map(a=>a[1])),mu,'var(--c1)','c'))}</div>`};
+
+const P4=()=>{const mc=X('m'),cm=M.map((_,i)=>cnt(mc,r=>r.m==i)),g=[1.01,1.066,1.059,1.031],fr=[cm[11]].concat(g.map((x,i)=>Math.round(cm[i]*x))),fc=[0,.1,.11,.12,.13],N=Array(11).fill(null);
+  return `<h2>4. Proyección de demanda</h2><p class="lead">Se habilita con un ciclo anual completo de historial.</p>
+<div class="g">${kpi('Error de pronóstico (MAPE)','8,4 %','promedio de |proyectado − real| ÷ real','var(--c2)')}${kpi('Demanda estimada, próximos 4 meses',fm(sum(fr.slice(1))),'solicitudes proyectadas','var(--c1)')}${kpi('Mes de mayor demanda prevista','Jul · '+fr[1],'receso invernal','var(--c4)')}${kpi('Historial requerido','12 meses','mínimo para proyectar','var(--c3)')}</div>
+<div class="g">${card(12,'Solicitudes reales y previsión','Línea punteada: previsión con intervalo. Responde a los filtros de punto, categoría, segmento y canal',lgd([['Reales','var(--c1)'],['Previsión','var(--c2)',1]])+line(M.concat(['Jul','Ago','Sep','Oct']),[{v:cm.concat([null,null,null,null]),c:'var(--c1)'},{v:N.concat(fr),c:'var(--c2)',d:1}],{band:{hi:N.concat(fr.map((v,i)=>Math.round(v*(1+fc[i])))),lo:N.concat(fr.map((v,i)=>Math.round(v*(1-fc[i]))))},shade:[[12,15]],aria:'Solicitudes reales y previsión de demanda con intervalo'}))}</div>`};
+
+const T=[
+['Reservas',335,10,1,[['id_reserva','k'],['id_cliente','k'],['id_fecha','k'],['id_punto','k'],['id_categoria','k'],['id_segmento','k'],['id_canal','k'],['id_conductor','k'],['importe','n'],['comisión','n'],['anticipación_h','n'],['estado','t']]],
+['Intentos de asignación',335,300,1,[['id_intento','k'],['id_reserva','k'],['id_conductor','k'],['id_fecha','k'],['id_categoria','k'],['hora_envío','d'],['respuesta','t'],['resultado','t'],['tiempo_resp_min','n']]],
+['Calendario',20,10,0,[['fecha','k'],['año','n'],['mes','t'],['día_semana','t'],['feriado','t'],['pasajeros_ANAC','n']]],
+['Punto de servicio',20,190,0,[['id_punto','k'],['nombre','t'],['aeropuerto','t']]],
+['Categoría',20,330,0,[['id_categoria','k'],['nombre','t'],['capacidad','n']]],
+['Segmento de cliente',650,20,0,[['id_segmento','k'],['nombre','t']]],
+['Canal',650,130,0,[['id_canal','k'],['nombre','t']]],
+['Conductor',650,280,0,[['id_conductor','k'],['nombre','t'],['categoría','t'],['disponibilidad','t']]]];
+const rel=(a,b,c,d)=>{const g=Math.atan2(d-b,c-a),mx=a+(c-a)*.55,my=b+(d-b)*.55,u=[Math.cos(g),Math.sin(g)],n=[-u[1],u[0]];
+  return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="var(--mut)" stroke-width="1.2"/><polygon points="${mx+u[0]*5},${my+u[1]*5} ${mx-u[0]*4+n[0]*3.5},${my-u[1]*4+n[1]*3.5} ${mx-u[0]*4-n[0]*3.5},${my-u[1]*4-n[1]*3.5}" fill="var(--mut)"/><text class="tx" x="${a+u[0]*14+n[0]*8}" y="${b+u[1]*14+n[1]*8+3}" text-anchor="middle">1</text><text class="tx" x="${c-u[0]*14+n[0]*8}" y="${d-u[1]*14+n[1]*8+3}" text-anchor="middle">*</text>`};
+const tbl=t=>{const [nm,x,y,f,fl]=t,h=28+fl.length*17+8;
+  let s=`<rect x="${x}" y="${y}" width="190" height="${h}" fill="var(--sf)" stroke="var(--ln)"/><rect x="${x}" y="${y}" width="190" height="24" fill="var(--tb)"/><rect x="${x}" y="${y}" width="190" height="3" fill="${f?'var(--br)':'var(--c2)'}"/><text x="${x+10}" y="${y+17}" font-size="12.5" font-weight="600" fill="var(--ink)">${nm}</text>`;
+  fl.forEach(([n,k],i)=>{const yy=y+28+i*17+11;s+=k=='k'?`<circle cx="${x+13}" cy="${yy-3}" r="3.5" fill="var(--br)"/>`:`<text class="tx" x="${x+13}" y="${yy}" text-anchor="middle">${{n:'Σ',d:'▦',t:'Aa'}[k]}</text>`;s+=`<text x="${x+26}" y="${yy}" font-size="11" fill="var(--ink)">${n}</text>`});
+  return s};
+const star=()=>{let s='<div style="overflow-x:auto"><div style="min-width:720px"><svg viewBox="0 0 860 510" role="img" aria-label="Vista de modelo: dos tablas de hechos y seis dimensiones" style="width:100%;height:auto;display:block">';
+  [[2,'L',45,335],[3,'L',120,360],[4,'L',200,385],[5,'R',60,335],[6,'R',120,360],[7,'R',180,385]].forEach(([i,sd,fr,fi])=>{const t=T[i],h=28+t[4].length*17+8,my=t[2]+h/2,ax=sd=='L'?t[1]+190:t[1],fx=sd=='L'?335:525;s+=rel(ax,my,fx,fr)+rel(ax,my,fx,fi)});
+  s+=rel(430,250,430,300);T.forEach(t=>s+=tbl(t));
+  return s+'</svg></div></div><p class="note">● clave (PK / FK) · Σ medida numérica · ▦ fecha · Aa texto. 1 = uno, * = muchos. La flecha marca la dirección del filtro, desde la dimensión hacia las tablas de hechos.</p>'};
+const P5=()=>`<h2>5. Modelo de datos y flujo</h2><p class="lead">Cómo llegan los datos del ERP a Power BI y cómo se organizan en un modelo en estrella.</p>
+<div class="g">${card(12,'Flujo de datos propuesto','De las fuentes operativas al tablero de los socios',`<div class="flow"><div><b>Fuentes</b>Botmaker, API de vuelos, app del conductor, facturación</div><div class="ar">›</div><div><b>ERP</b>Ficha única, asignaciones, eventos y facturación</div><div class="ar">›</div><div><b>Exportación</b>CSV o Excel programado en OneDrive o SharePoint</div><div class="ar">›</div><div><b>Power Query</b>ETL, más feriados y pasajeros ANAC</div><div class="ar">›</div><div><b>Modelo en estrella</b>Dos hechos y seis dimensiones</div><div class="ar">›</div><div><b>Power BI</b>Tablero de gestión para los socios</div></div><p class="note">Etapa 2: conexión directa a la base del ERP, con puerta de enlace si corresponde.</p>`)}</div>
+<div class="g">${card(12,'Vista de modelo en Power BI','Modelo en estrella: las dos tablas de hechos comparten las dimensiones',star())}</div>`;
+
+const PG=[['Demanda y estacionalidad',P1],['Capacidad y cobertura',P2],['Comercial',P3],['Proyección',P4],['Modelo de datos',P5]];
+function draw(){
+  $('#sbar').innerHTML=sbar();
+  $('#root').innerHTML=PG.map((p,i)=>`<section class="pg${i==CUR?' on':''}" id="p${i}">${p[1]()}</section>`).join('')+'<p class="ft">Maqueta con datos ilustrativos (8.360 solicitudes simuladas) generados para el trabajo integrador; no son datos reales de la empresa.</p>';
+  $('#tabs').innerHTML=PG.map((p,i)=>`<button data-i="${i}" class="${i==CUR?'on':''}">${i<4?(i+1)+'. ':''}${p[0]}</button>`).join('');
+}
+document.addEventListener('click',e=>{const t=e.target;
+  const sl=t.closest('[data-sl]');if(sl){OPEN=OPEN==sl.dataset.sl?null:sl.dataset.sl;return draw()}
+  if(t.closest('.dd'))return;
+  if(t.closest('[data-x]')){Object.values(F).forEach(s=>s.clear());OPEN=null;return draw()}
+  const cf=t.closest('[data-cf]');if(cf){const s=F[cf.dataset.cf],v=+cf.dataset.v;if(s.size==1&&s.has(v))s.clear();else{s.clear();s.add(v)}OPEN=null;return draw()}
+  const tb=t.closest('[data-i]');if(tb){CUR=+tb.dataset.i;OPEN=null;draw();return window.scrollTo(0,0)}
+  if(OPEN){OPEN=null;draw()}});
+document.addEventListener('change',e=>{const c=e.target.closest('[data-ck]');if(!c)return;const s=F[c.dataset.ck],v=+c.dataset.v;c.checked?s.add(v):s.delete(v);draw()});
+draw();
+</script>
+</body>
+</html>
